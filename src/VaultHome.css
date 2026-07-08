@@ -1,0 +1,361 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap');
+
+/* === Vault Page Scroll Overrides === */
+html.vault-page-active,
+html.vault-page-active body {
+  overflow: auto !important;
+  height: auto !important;
+  min-height: 100% !important;
+}
+
+html.vault-page-active #root {
+  height: auto !important;
+  overflow: visible !important;
+}
+
+:root {
+  --bg-color: #121212;
+  --card-bg: #1a1a1a;
+  --input-bg: #262626;
+  --border-color: #262626;
+  --text-primary: #ffffff;
+  --text-secondary: #a3a3a3;
+  --accent-color: #2563EB;
+  --accent-hover: #1D4ED8;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.vault-home-container {
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80px 40px;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* === Header === */
+.vault-home-header {
+  text-align: center;
+  margin-bottom: 64px;
+  width: 100%;
+  max-width: 800px;
+}
+
+.vault-home-header h1 {
+  font-family: 'Inter', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.vault-home-header p {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  font-weight: 400;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* === Grid Section === */
+.vault-grid-section {
+  width: 100%;
+  max-width: 1000px;
+}
+
+.vault-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.vault-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 32px;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+}
+
+.vault-card:hover {
+  border-color: var(--accent-color);
+  background: #1d1d1d;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.vault-icon {
+  width: 40px;
+  height: 40px;
+  background: #262626;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  transition: var(--transition);
+}
+
+.vault-card:hover .vault-icon {
+  color: var(--accent-color);
+  background: rgba(37, 99, 235, 0.1);
+}
+
+.vault-info h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.vault-info p {
+  margin: 6px 0 0;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+}
+
+/* === Create Card === */
+.create-card {
+  border-style: dashed;
+  background: transparent;
+  justify-content: center;
+}
+
+.create-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.create-card input {
+  background: var(--input-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 100px;
+  padding: 12px 20px;
+  color: #ffffff;
+  font-size: 0.9rem;
+  outline: none;
+  font-family: inherit;
+  transition: var(--transition);
+}
+
+.create-card input:focus {
+  border-color: #404040;
+}
+
+.create-card button {
+  background: var(--accent-color);
+  color: #fff;
+  border: none;
+  border-radius: 100px;
+  padding: 12px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.create-card button:hover {
+  background: var(--accent-hover);
+}
+
+/* === Delete Button === */
+.delete-vault-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border: none;
+  color: #525252;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: var(--transition);
+}
+
+.vault-card:hover .delete-vault-btn {
+  opacity: 1;
+}
+
+.delete-vault-btn:hover {
+  background: #ef4444;
+  color: #fff;
+}
+
+/* === Footer === */
+.vault-home-footer {
+  margin-top: 80px;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.btn-settings {
+  background: none;
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  padding: 10px 24px;
+  border-radius: 100px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-settings:hover {
+  border-color: #404040;
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* === Modal === */
+.settings-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.settings-modal {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 24px;
+  width: 90%;
+  max-width: 500px;
+  overflow: hidden;
+  animation: modalIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.settings-header {
+  padding: 24px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #262626;
+}
+
+.settings-header h2 {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  padding: 16px 24px;
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: var(--transition);
+}
+
+.tab-btn.active {
+  color: var(--accent-color);
+  border-bottom-color: var(--accent-color);
+}
+
+.settings-content {
+  padding: 32px;
+}
+
+.tab-pane h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #525252;
+}
+
+.account-section {
+  margin-bottom: 32px;
+}
+
+.secondary-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 100px;
+  border: 1px solid #333;
+  background: none;
+  color: var(--text-primary);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.secondary-btn:hover {
+  background: #262626;
+}
+
+.sign-out-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 100px;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  background: rgba(239, 68, 68, 0.05);
+  color: #ef4444;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.sign-out-btn:hover {
+  background: #ef4444;
+  color: #fff;
+}
+
+/* === Spinner === */
+.vault-home-loading {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid #262626;
+  border-top-color: var(--accent-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
