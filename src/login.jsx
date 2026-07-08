@@ -103,7 +103,7 @@ const Login = () => {
   const handleGoogleSignIn = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
-      options: { redirectTo: window.location.origin }
+      options: { redirectTo: 'https://frontend-yvle.vercel.app' }
     });
     if (error) alert(`Google sign in error: ${error.message}`);
   };
