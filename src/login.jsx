@@ -44,9 +44,12 @@ const Login = () => {
     const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
       if (session) persistSessionInCookies(session);
       if (event === 'PASSWORD_RECOVERY') setAuthMode('reset');
+      if (event === 'SIGNED_IN' && session?.user) {
+        navigate(`/${session.user.id}`);
+      }
     });
     return () => authListener?.subscription?.unsubscribe();
-  }, []);
+  }, [navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
