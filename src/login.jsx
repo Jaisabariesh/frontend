@@ -12,6 +12,8 @@ const Login = () => {
   const [newPassword, setNewPassword] = useState('');
   const [authMode, setAuthMode] = useState('login'); // 'login', 'signup', 'forgot', 'reset'
   const [isLoading, setIsLoading] = useState(false);
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
+  const [showTermsModal, setShowTermsModal] = useState(false);
   const navigate = useNavigate();
 
   const persistSessionInCookies = (session) => {
@@ -66,6 +68,10 @@ const Login = () => {
 
   const handleSignup = async (e) => {
     e.preventDefault();
+    if (!acceptedTerms) {
+      alert('Please agree to the Terms and Conditions before signing up.');
+      return;
+    }
     setIsLoading(true);
     const { data, error } = await supabase.auth.signUp({ email, password });
     if (error) {
@@ -104,6 +110,10 @@ const Login = () => {
   };
 
   const handleGoogleSignIn = async () => {
+    if (authMode === 'signup' && !acceptedTerms) {
+      alert('Please agree to the Terms and Conditions before signing up with Google.');
+      return;
+    }
     const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: { redirectTo: window.location.origin }
@@ -118,7 +128,7 @@ const Login = () => {
           <>
             <div className="auth-header">
               <h1 className="auth-title">Create account</h1>
-              <p className="auth-subtitle">Get started with NoteBlurt today</p>
+              <p className="auth-subtitle">Get started with Luna today</p>
             </div>
             <form className="auth-form" onSubmit={handleSignup}>
               <input 
@@ -137,6 +147,19 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)} 
                 required 
               />
+              <div className="terms-checkbox-container">
+                <input 
+                  type="checkbox" 
+                  id="terms-checkbox"
+                  className="terms-checkbox"
+                  checked={acceptedTerms} 
+                  onChange={(e) => setAcceptedTerms(e.target.checked)} 
+                  required 
+                />
+                <label htmlFor="terms-checkbox" className="terms-label">
+                  I agree to the <button type="button" className="terms-link-btn" onClick={() => setShowTermsModal(true)}>Terms & Conditions</button>
+                </label>
+              </div>
               <button type="submit" className="btn-pill btn-primary" disabled={isLoading}>
                 {isLoading ? 'Creating account...' : 'Sign up'}
               </button>
@@ -249,11 +272,77 @@ const Login = () => {
     <div className="auth-page-container">
       <div className="auth-wrapper">
         <div className="auth-logo">
-          <img src="/logo.png" alt="NoteBlurt" className="auth-logo-img" />
-          NoteBlurt
+          <img src="/logo.png" alt="Luna" className="auth-logo-img" />
+          Luna
         </div>
         {renderContent()}
       </div>
+
+      {showTermsModal && (
+        <div className="terms-modal-overlay" onClick={() => setShowTermsModal(false)}>
+          <div className="terms-modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="terms-modal-header">
+              <h2>Terms & Conditions</h2>
+              <button className="terms-modal-close" onClick={() => setShowTermsModal(false)}>&times;</button>
+            </div>
+            <div className="terms-modal-body">
+              <h3>Welcome to Luna</h3>
+              <p>
+                Luna is a next-generation interactive learning workspace designed for students, researchers, and professionals in STEM fields. By creating an account, you agree to these Terms and Conditions.
+              </p>
+
+              <h3>1. Interactive STEM Features</h3>
+              <p>
+                Luna provides an integrated suite of tools to visualize and study complex scientific concepts:
+              </p>
+              <ul>
+                <li><strong>Rich Text Notes:</strong> A custom TipTap note taking editor allowing structured content layout.</li>
+                <li><strong>Math Equation Editor:</strong> Real-time LaTeX compilation and formula display.</li>
+                <li><strong>Molecular Visualizer:</strong> Draw, modify, and inspect chemical molecular structures in 2D via the integrated JSME editor.</li>
+                <li><strong>Graph Plotter:</strong> Functional plot builder for visual math/coordinate functions.</li>
+                <li><strong>Drawing Canvas:</strong> Sketch, draw diagrams, draw shapes, and build annotations dynamically using a Konva canvas.</li>
+                <li><strong>Mind Maps:</strong> Create logic connections and hierarchy graphs between concepts.</li>
+              </ul>
+
+              <h3>2. AI-Assisted Blurting Mode & Credits</h3>
+              <p>
+                Luna includes a special active-recall study method called <strong>"Blurting Mode"</strong>. In this mode, users can hide their notes and attempt to recall the content. The recall version is sent to the Gemini AI API for evaluation.
+              </p>
+              <ul>
+                <li>Evaluation requires AI credits depending on the content length processed.</li>
+                <li>New accounts are granted 50 free model/AI credits.</li>
+                <li>Credits can be top-up purchased securely using the Razorpay billing gateway. Refund/chargeback requests are handled according to our standard refund flow.</li>
+              </ul>
+
+              <h3>3. User Ownership & Acceptable Use</h3>
+              <p>
+                You retain complete ownership of all notes, math equations, chemistry structures, and diagrams you create. Luna does not claim any intellectual property rights over your workspace content. You agree not to use Luna for publishing illegal, plagiarized, or malicious content, or spamming the AI evaluation layer.
+              </p>
+
+              <h3>4. Verification of System Output</h3>
+              <p>
+                AI-generated feedback and formula rendering are provided for educational purposes. We advise verification of critical STEM calculations, chemical formulas, and mathematical proofs via standard textbooks or official reference sources.
+              </p>
+
+              <h3>5. Security & Authentication</h3>
+              <p>
+                All account creations and logins are securely brokered via Supabase Auth services. You are responsible for maintaining the confidentiality of your credentials.
+              </p>
+            </div>
+            <div className="terms-modal-footer">
+              <button 
+                className="btn-pill btn-primary btn-modal-agree"
+                onClick={() => {
+                  setAcceptedTerms(true);
+                  setShowTermsModal(false);
+                }}
+              >
+                Agree & Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

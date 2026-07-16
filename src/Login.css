@@ -242,3 +242,186 @@ body {
   }
 }
 
+/* === Checkbox Terms styles === */
+.terms-checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 4px 0 12px 0;
+  text-align: left;
+}
+
+.terms-checkbox {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent-color);
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.terms-label {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  user-select: none;
+  line-height: 1.4;
+}
+
+.terms-link-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--text-primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  transition: var(--transition);
+}
+
+.terms-link-btn:hover {
+  color: var(--accent-color);
+}
+
+/* === Glassmorphic Terms Modal === */
+.terms-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeInModal 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.terms-modal-content {
+  background-color: #1a1a1a;
+  border: 1px solid #2e2e2e;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 550px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  animation: slideUpModal 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.terms-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid #2e2e2e;
+}
+
+.terms-modal-header h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.terms-modal-close {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 1.8rem;
+  cursor: pointer;
+  transition: var(--transition);
+  padding: 0;
+  line-height: 1;
+}
+
+.terms-modal-close:hover {
+  color: var(--text-primary);
+  transform: rotate(90deg);
+}
+
+.terms-modal-body {
+  padding: 24px;
+  overflow-y: auto;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #d4d4d4;
+  text-align: left;
+}
+
+/* Beautiful custom scrollbar for modal body */
+.terms-modal-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.terms-modal-body::-webkit-scrollbar-track {
+  background: #121212;
+  border-radius: 4px;
+}
+
+.terms-modal-body::-webkit-scrollbar-thumb {
+  background: #2e2e2e;
+  border-radius: 4px;
+}
+
+.terms-modal-body::-webkit-scrollbar-thumb:hover {
+  background: #404040;
+}
+
+.terms-modal-body h3 {
+  color: var(--text-primary);
+  font-size: 1.1rem;
+  margin: 24px 0 8px 0;
+  font-weight: 600;
+}
+
+.terms-modal-body h3:first-of-type {
+  margin-top: 0;
+}
+
+.terms-modal-body p {
+  margin: 0 0 16px 0;
+}
+
+.terms-modal-body ul {
+  margin: 0 0 20px 0;
+  padding-left: 20px;
+}
+
+.terms-modal-body li {
+  margin-bottom: 8px;
+}
+
+.terms-modal-body li strong {
+  color: var(--text-primary);
+}
+
+.terms-modal-footer {
+  padding: 16px 24px;
+  border-top: 1px solid #2e2e2e;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-modal-agree {
+  width: auto;
+  min-width: 140px;
+  padding: 12px 24px;
+}
+
+@keyframes fadeInModal {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUpModal {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
