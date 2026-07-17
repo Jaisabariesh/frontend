@@ -14,7 +14,8 @@ const CreditManager = ({ uid, refreshKey }) => {
 
   const fetchCredits = useCallback(async () => {
     try {
-      const token = Cookies.get('sb-access-token');
+      const { data: { session } } = await supabase.auth.getSession();
+      const token = session?.access_token || Cookies.get('sb-access-token');
       const res = await axios.get(`${API_URL}/credits`, {
         headers: { Authorization: `Bearer ${token}` }
       });
@@ -51,11 +52,16 @@ const CreditManager = ({ uid, refreshKey }) => {
       }
 
       // 2. CREATE ORDER (Backend)
-      const token = Cookies.get('sb-access-token');
-      
+      // Get a fresh session token from Supabase (auto-refreshed)
+      const { data: { session } } = await supabase.auth.getSession();
+      const token = session?.access_token || Cookies.get('sb-access-token');
+
+      if (!token) {
+        throw new Error('You are not logged in. Please sign in and try again.');
+      }
+
       // Fetch user email for prefill
-      const { data: { user } } = await supabase.auth.getUser();
-      const userEmail = user?.email || '';
+      const userEmail = session?.user?.email || '';
 
       const orderRes = await axios.post(`${API_URL}/api/create-order`, 
         { amount: topupAmount },
@@ -83,7 +89,8 @@ const CreditManager = ({ uid, refreshKey }) => {
         },
         handler: async (response) => {
           try {
-            const token = Cookies.get('sb-access-token');
+            const { data: { session: verifySession } } = await supabase.auth.getSession();
+            const token = verifySession?.access_token || Cookies.get('sb-access-token');
             const verifyRes = await axios.post(`${API_URL}/api/verify-payment`, {
               razorpay_order_id: response.razorpay_order_id,
               razorpay_payment_id: response.razorpay_payment_id,

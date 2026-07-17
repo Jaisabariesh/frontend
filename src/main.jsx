@@ -37,6 +37,16 @@ const OAuthCallback = () => {
   return null; // render nothing while redirecting
 };
 
+// Keep the cookie token always fresh by listening to Supabase auth state changes.
+// Supabase auto-refreshes the access token before it expires — this ensures the
+// cookie stays in sync so older cookie-based calls still work.
+supabase.auth.onAuthStateChange((event, session) => {
+  if (session?.access_token) {
+    Cookies.set('sb-access-token', session.access_token, { expires: 3650 });
+    Cookies.set('sb-refresh-token', session.refresh_token, { expires: 3650 });
+  }
+});
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
